@@ -1,0 +1,1 @@
+# eslint-prettier-babel-package
