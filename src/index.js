@@ -33,12 +33,16 @@ async function fetchAndLogData(location) {
     if (data) {
       console.log(data);
     } else {
-      console.log('No data available');
+      console.log('no data available');
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error('error');
   }
 }
+async function fetchData(event) {
+  event.preventDefault();
+  const locationInput = document.getElementById('location').value;
+  await fetchAndLogData(locationInput);
+}
 
-const location = prompt('Please enter a location');
-fetchAndLogData(location);
+document.getElementById('weatherForm').addEventListener('submit', fetchData);
