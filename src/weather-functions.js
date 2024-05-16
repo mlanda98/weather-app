@@ -2,8 +2,7 @@
 
 export async function getLocationData(location) {
   const apiKey = '850c0f76ad8944c6806162632240605';
-  const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(
-    location)}`;
+  const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(location)}`;
 
   try {
     const response = await fetch(apiUrl);
@@ -23,6 +22,7 @@ export async function getLocationData(location) {
         fahrenheit: temperatureFahrenheit,
       },
       condition: data.current.condition.text,
+      icon: data.current.condition.icon,
       humidity: data.current.humidity,
 
       wind: data.current.wind_mph,

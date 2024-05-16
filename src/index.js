@@ -10,6 +10,7 @@ function displayWeatherData(data) {
   <p>Region: ${data.region}</p>
   <p>Temperature: ${temperature}${unit}</p>
   <p>Condition: ${data.condition}</p>
+  <img src="${data.icon}" alt="${data.condition}"/>
   <p>Humidity: ${data.humidity}%</p>
   <p>Wind: ${data.wind} mph</p>`;
 }
@@ -51,5 +52,3 @@ document.getElementById('fetchButton').addEventListener('click', (event) => {
 document.getElementById('unitCheckbox').addEventListener('change', () => {
   toggleTemperature();
 });
-
-
