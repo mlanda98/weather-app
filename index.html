@@ -10,8 +10,11 @@
   <form id="weatherForm">
     <label for="location">Location:</label>
     <input type="text" id="location" name="location">
-    <button type="submit">Get Weather Data</button>
+    <button type="submit" id="fetchButton">Search</button>
+    <label for="unitCheckbox">Celsius</label>
+    <input type="checkbox" id="unitCheckbox" class="unit-checkbox">
   </form>
+  <div id="weatherData"></div>
   <script src="main.js"></script>
 </body>
 </html>
