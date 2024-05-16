@@ -1,48 +1,55 @@
-async function getLocationData(location) {
-  const apiKey = '850c0f76ad8944c6806162632240605';
-  const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(
-    location
-  )}`;
+import { getLocationData, toggleTemperatureUnit } from './weather-functions';
 
-  try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
-    }
-    const data = await response.json();
+function displayWeatherData(data) {
+  const weatherDataContainer = document.getElementById('weatherData');
+  const unit = document.getElementById('unitCheckbox').checked ? 'C' : 'F';
+  const temperature = unit === 'C' ? data.temperature.celsius : data.temperature.fahrenheit;
 
-    const extractedData = {
-      location: data.location.name,
-      region: data.location.region,
-      currentTemperature: data.current.feelslike_f,
-      condition: data.current.condition.text,
-      humidity: data.current.humidity,
-      temperature: data.current.temp_f,
-      wind: data.current.wind_mph,
-    };
-    return extractedData;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return null;
-  }
+  weatherDataContainer.innerHTML = `
+  <p>Location: ${data.location}</p>
+  <p>Region: ${data.region}</p>
+  <p>Temperature: ${temperature}${unit}</p>
+  <p>Condition: ${data.condition}</p>
+  <p>Humidity: ${data.humidity}%</p>
+  <p>Wind: ${data.wind} mph</p>`;
 }
-
 async function fetchAndLogData(location) {
   try {
     const data = await getLocationData(location);
     if (data) {
-      console.log(data);
+      displayWeatherData(data);
     } else {
       console.log('no data available');
     }
   } catch (error) {
-    console.error('error');
+    console.error(error);
   }
 }
-async function fetchData(event) {
-  event.preventDefault();
-  const locationInput = document.getElementById('location').value;
-  await fetchAndLogData(locationInput);
+
+async function toggleTemperature() {
+  try {
+    const locationInput = document.getElementById('location').value;
+    const data = await getLocationData(locationInput);
+    if (data) {
+      const unit = document.getElementById('unitCheckbox').checked ? 'C' : 'F';
+      const newData = toggleTemperatureUnit(data, unit);
+      displayWeatherData(newData);
+    } else {
+      console.log('no data available');
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-document.getElementById('weatherForm').addEventListener('submit', fetchData);
+document.getElementById('fetchButton').addEventListener('click', (event) => {
+  event.preventDefault();
+  const locationInput = document.getElementById('location').value;
+  fetchAndLogData(locationInput);
+});
+
+document.getElementById('unitCheckbox').addEventListener('change', () => {
+  toggleTemperature();
+});
+
+
