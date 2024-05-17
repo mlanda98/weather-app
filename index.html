@@ -7,18 +7,18 @@
   <link rel="stylesheet" href="styles.css" >
 </head>
 <body>
-  <div>
-    <img>
+  <div class="header">
+    <img src="weather-icon.png" alt="picture of the sun">
     <h1>Weather App</h1>
   </div>
   <form id="weatherForm">
     <label for="location"></label>
     <input type="text" id="location" name="location" placeholder="enter a location">
     <button type="submit" id="fetchButton">Search</button>
-    <label for="unitCheckbox">Celsius</label>
+    <label for="unitCheckbox" id="checkbox">Celsius</label>
     <input type="checkbox" id="unitCheckbox" class="unit-checkbox">
   </form>
-  <div id="weatherData"></div>
+  <div id="weatherData" class="hidden"></div>
   <script src="main.js"></script>
 </body>
 </html>
