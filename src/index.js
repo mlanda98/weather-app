@@ -2,17 +2,26 @@ import { getLocationData, toggleTemperatureUnit } from './weather-functions';
 
 function displayWeatherData(data) {
   const weatherDataContainer = document.getElementById('weatherData');
-  const unit = document.getElementById('unitCheckbox').checked ? 'C' : 'F';
-  const temperature = unit === 'C' ? data.temperature.celsius : data.temperature.fahrenheit;
+  weatherDataContainer.classList.remove('hidden');
 
-  weatherDataContainer.innerHTML = `
-  <p>Location: ${data.location}</p>
-  <p>Region: ${data.region}</p>
+  const unit = document.getElementById('unitCheckbox').checked ? 'C' : 'F';
+  const temperature =
+    unit === 'C' ? data.temperature.celsius : data.temperature.fahrenheit;
+
+  const weatherContent = document.createElement('div');
+  weatherContent.className = 'weatherData';
+
+  weatherContent.innerHTML = `
+  <p class="location">${data.location}</p>
+  <p class="location">${data.region}</p>
   <p>Temperature: ${temperature}${unit}</p>
   <p>Condition: ${data.condition}</p>
-  <img src="${data.icon}" alt="${data.condition}"/>
+  <img class="condition-icon" src="${data.icon}" alt="${data.condition}"/>
   <p>Humidity: ${data.humidity}%</p>
   <p>Wind: ${data.wind} mph</p>`;
+
+  weatherDataContainer.innerHTML = '';
+  weatherDataContainer.appendChild(weatherContent);
 }
 async function fetchAndLogData(location) {
   try {
